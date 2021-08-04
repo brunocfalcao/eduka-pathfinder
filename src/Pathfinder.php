@@ -85,6 +85,17 @@ class PathfinderService
     }
 
     /**
+     * External means the url source is NOT from a frontend and NOT from the
+     * backend.
+     *
+     * @return bool
+     */
+    public function isExternal()
+    {
+        return !$this->inBackend() && !$this->inFrontend();
+    }
+
+    /**
      * Logic to verify if the course structure exists. It's not about verifying
      * if courses exists, but about to verify if the data structure (e.g. tables)
      * exist in the database.
