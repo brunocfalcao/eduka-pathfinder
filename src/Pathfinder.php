@@ -92,7 +92,7 @@ class PathfinderService
      */
     public function isExternal()
     {
-        return !$this->inBackend() && !$this->inFrontend();
+        return ! $this->inBackend() && ! $this->inFrontend();
     }
 
     /**
