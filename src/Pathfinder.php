@@ -2,6 +2,7 @@
 
 namespace Eduka\Pathfinder;
 
+use Eduka\Cube\Models\Course;
 use Eduka\Cube\Models\Domain;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -56,6 +57,10 @@ class PathfinderService
      */
     public function course()
     {
+        if (session()->has('eduka-pathfinder-contextualized')) {
+            return session('eduka-pathfinder-course');
+        }
+
         return $this->exist() ?
                 optional(Domain::firstWhere('name', $this->host()))->course
                 : null;
@@ -93,6 +98,31 @@ class PathfinderService
     public function isExternal()
     {
         return ! $this->inBackend() && ! $this->inFrontend();
+    }
+
+    /**
+     * Contextualizes a course. All future calls to know what course is loaded
+     * will be answered with this course.
+     *
+     * @param  Course $course
+     * @return void
+     */
+    public function contextualize(Course $course)
+    {
+        session(['eduka-pathfinder-course' => $course]);
+        session(['eduka-pathfinder-contextualized' => true]);
+    }
+
+    /**
+     * Decontextualizes a course. All calls henceforth will dynamically verify
+     * what course is loaded via the source url.
+     *
+     * @return void
+     */
+    public function decontextualize()
+    {
+        session()->forget('eduka-pathfinder-course');
+        session()->forget('eduka-pathfinder-contextualized');
     }
 
     /**
