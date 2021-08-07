@@ -105,12 +105,17 @@ class PathfinderService
      * will be answered with this course.
      *
      * @param  Course $course
+     * @param  $register
      * @return void
      */
-    public function contextualize(Course $course)
+    public function contextualize(Course $course, $register = true)
     {
         session(['eduka-pathfinder-course' => $course]);
         session(['eduka-pathfinder-contextualized' => true]);
+
+        if ($register) {
+            app()->register($course->provider_namespace);
+        }
     }
 
     /**
