@@ -21,11 +21,9 @@ class Pathfinder
 
 class PathfinderService
 {
-    public $url;
-
     public function __construct()
     {
-        $this->url = url();
+        //
     }
 
     public static function new(...$args)
@@ -88,7 +86,7 @@ class PathfinderService
      */
     public function inBackend()
     {
-        return $this->host() == config('eduka-Pathfinder.main.url');
+        return $this->host() == config('eduka-pathfinder-main-url');
     }
 
     /**
