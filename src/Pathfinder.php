@@ -21,9 +21,11 @@ class Pathfinder
 
 class PathfinderService
 {
+    public $url;
+
     public function __construct()
     {
-        //
+        $this->url = url();
     }
 
     public static function new(...$args)
