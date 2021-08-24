@@ -86,7 +86,7 @@ class PathfinderService
      */
     public function inBackend()
     {
-        return $this->host() == config('eduka-pathfinder-main-url');
+        return $this->host() == config('eduka-nereus.main.url');
     }
 
     /**
