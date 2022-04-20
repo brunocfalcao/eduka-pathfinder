@@ -57,13 +57,16 @@ class PathfinderService
      */
     public function course()
     {
-        if (session()->has('eduka-pathfinder-contextualized')) {
-            return session('eduka-pathfinder-course');
-        }
-
-        return $this->exist() ?
-                optional(Domain::firstWhere('name', $this->host()))->course
+        /**
+         * Grab a course instance given the current domain name.
+         */
+        try {
+            return $this->schemaExist() ?
+                optional(Course::firstWhere('domain', $this->host()))
                 : null;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     /**
@@ -86,17 +89,18 @@ class PathfinderService
      */
     public function inBackend()
     {
-        return $this->host() == config('eduka-nereus.main.url');
+        return collect(config('eduka-nereus.main.url'))->search($this->host());
     }
 
     /**
-     * External means the url source is NOT from a frontend and NOT from the
+     * External means the current url is NOT from a frontend and NOT from the
      * backend.
      *
      * @return bool
      */
-    public function isExternal()
+    public function fromExternalSource()
     {
+
         return ! $this->inBackend() && ! $this->inFrontend();
     }
 
@@ -110,11 +114,11 @@ class PathfinderService
      */
     public function contextualize(Course $course, $register = true)
     {
-        session(['eduka-pathfinder-course' => $course]);
-        session(['eduka-pathfinder-contextualized' => true]);
+        session(['eduka-pathfinder:course' => $course]);
+        session(['eduka-pathfinder:contextualized' => true]);
 
         if ($register) {
-            app()->register($course->provider_namespace);
+            $course->registerProvider();
         }
     }
 
@@ -126,8 +130,8 @@ class PathfinderService
      */
     public function decontextualize()
     {
-        session()->forget('eduka-pathfinder-course');
-        session()->forget('eduka-pathfinder-contextualized');
+        session()->forget('eduka-pathfinder:course');
+        session()->forget('eduka-pathfinder:contextualized');
     }
 
     /**
@@ -137,8 +141,8 @@ class PathfinderService
      *
      * @return bool
      */
-    private function exist()
+    private function schemaExist()
     {
-        return Schema::hasTable('courses') && Schema::hasTable('domains');
+        return Schema::hasTable('courses');
     }
 }
