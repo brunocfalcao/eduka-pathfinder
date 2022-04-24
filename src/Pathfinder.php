@@ -34,7 +34,7 @@ class PathfinderService
     /**
      * Returns the current request hostname.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @return string|null
      */
     protected function host()
@@ -108,8 +108,8 @@ class PathfinderService
      * Contextualizes a course. All future calls to know what course is loaded
      * will be answered with this course.
      *
-     * @param  Course $course
-     * @param  $register
+     * @param  Course  $course
+     * @param    $register
      * @return void
      */
     public function contextualize(Course $course, $register = true)
