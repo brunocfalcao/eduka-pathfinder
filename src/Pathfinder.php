@@ -114,8 +114,8 @@ class PathfinderService
      */
     public function contextualize(Course $course, $register = true)
     {
-        session(['eduka-pathfinder:course' => $course]);
-        session(['eduka-pathfinder:contextualized' => true]);
+        session(['eduka:pathfinder:course' => $course]);
+        session(['eduka:pathfinder:contextualized' => true]);
 
         if ($register) {
             $course->registerProvider();
@@ -130,8 +130,8 @@ class PathfinderService
      */
     public function decontextualize()
     {
-        session()->forget('eduka-pathfinder:course');
-        session()->forget('eduka-pathfinder:contextualized');
+        session()->forget('eduka:pathfinder:course');
+        session()->forget('eduka:pathfinder:contextualized');
     }
 
     /**
