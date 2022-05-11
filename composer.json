@@ -12,7 +12,7 @@
     }],
     "require": {
         "php": "^7.4|^8.0",
-        "illuminate/support": "^7.14|^8.0",
+        "illuminate/support": "^8.0",
         "brunocfalcao/helpers": "dev-master"
     },
     "autoload": {
