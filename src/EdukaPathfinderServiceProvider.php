@@ -6,12 +6,14 @@ use Illuminate\Support\ServiceProvider;
 
 final class EdukaPathfinderServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function boot()
     {
+        info('[EdukaPathfinder][ServiceProvider] Start');
+        info('[EdukaPathfinder][ServiceProvider] Stop');
         //
     }
 
-    public function boot()
+    public function register()
     {
         //
     }
