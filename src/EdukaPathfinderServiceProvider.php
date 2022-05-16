@@ -8,8 +8,6 @@ final class EdukaPathfinderServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        info('[EdukaPathfinder][ServiceProvider] Start');
-        info('[EdukaPathfinder][ServiceProvider] Stop');
         //
     }
 
