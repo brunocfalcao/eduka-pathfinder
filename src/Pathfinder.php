@@ -32,23 +32,6 @@ class PathfinderService
     }
 
     /**
-     * Returns the current request hostname.
-     *
-     * @param  Request  $request
-     * @return string|null
-     */
-    protected function host()
-    {
-        $host = collect(explode('.', request()->getHost()));
-
-        if ($host->first() == 'www') {
-            $host->shift();
-        }
-
-        return $host->join('.');
-    }
-
-    /**
      * Returns a course instance mapped with the current hostname or null
      * in case there is no course detected (meaning the user is not in an
      * url that is mapped to a course frontend url).
@@ -62,7 +45,7 @@ class PathfinderService
          */
         try {
             return $this->schemaExist() ?
-                optional(Course::firstWhere('domain', $this->host()))
+                optional(Course::firstWhere('domain', domain(request()->getHost())))
                 : null;
         } catch (\Exception $e) {
             return null;
@@ -89,7 +72,7 @@ class PathfinderService
      */
     public function inBackend()
     {
-        return collect(config('eduka-nereus.main.url'))->search($this->host());
+        return collect(config('eduka-nereus.main.url'))->search(domain());
     }
 
     /**
