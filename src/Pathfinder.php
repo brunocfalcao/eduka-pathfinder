@@ -4,7 +4,6 @@ namespace Eduka\Pathfinder;
 
 use Eduka\Cube\Models\Course;
 use Eduka\Cube\Models\Domain;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
 /**
