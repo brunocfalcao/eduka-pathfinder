@@ -71,7 +71,9 @@ class PathfinderService
      */
     public function inBackend()
     {
-        return collect(config('eduka-nereus.main.url'))->search(domain());
+        $result = collect(config('eduka-nereus.main.url'))->search(domain());
+
+        return $result === false ? false : true;
     }
 
     /**
